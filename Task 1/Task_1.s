@@ -1,13 +1,22 @@
+# stores the values 0xFF into RAM locations 0x50 - 0x58 using direct addressing
+
+# tells the assembler that the following lines define data rather than executable code
 .section .bss
 .globl ram
+
+# reserves 256 bytes of memory labeled RAM
 .lcomm ram, 256 # reserve 256 bytes for RAM (uninitialized memory)
 
+# swtiches to the text section, where actual machine instructions reside
 .section .text
+# makes fill_ram label visible to the linker so C code can call it
 .globl fill_ram # make function visible to C program
 
+# starting label for function
 fill_ram:
     # store FFh into RAM locations 50H - 58H using direct addressing
 
+    # moves the byte (movb) with value 0xFF directly into the memory address of ram plus an offset of 0x5(0-8)
     movb $0xFF, ram+0x50
     movb $0xFF, ram+0x51
     movb $0xFF, ram+0x52
